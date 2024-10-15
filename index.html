@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio Sokko</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="FaviconIcon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+
+<body>
+    <nav>
+        <div>
+            <a href="/">
+                <img class="logo" src="https://studiosokko.s3.us-east-2.amazonaws.com/TitleWhite.svg">
+            </a>
+        </div>
+        <div class="images">
+            <img class="navigate" src="https://studiosokko.s3.us-east-2.amazonaws.com/spanish.svg"
+                onclick="location.href = '/indexesp.html';">
+            <img class="navigate" src="https://studiosokko.s3.us-east-2.amazonaws.com/info.svg"
+                onclick="location.href = '/info.html';">
+            <img class="navigate" src="https://studiosokko.s3.us-east-2.amazonaws.com/email.svg"
+                onclick="location.href = '/email.html';">
+        </div>
+    </nav>
+
+    <div class="container">
+        <img src="https://studiosokko.s3.us-east-2.amazonaws.com/MainLogo.svg" class="center-image animation">
+    </div>
+
+    <div class="smallcontainer" style="margin-top: 15%;">
+        <div class="text-box" >
+            <p>
+                Presented by Md Sahib, Benjamin Odhiambo, Bill Odiwuor Kawaka, Sanpha Kamara, and Tyler Orwa.
+            </p>
+
+            <p style="margin-top: 1.5%;">
+                We are excited to introduce you to our latest project: Studio Sokko! We are a passionate <br> animation collective of talented creators based in New Jersey.
+        </p>
+        <p style="margin-top: 1.5%;">
+            Our mission is to blend our love for drawing, animation, music, and art into unique <br> and inspiring works, encouraging others to follow their creative passions.
+        </p>
+    <p style="margin-top: 1.5%;">
+                Stay tuned - there's so much more ⭐
+            </p>
+        </div>
+
+
+    </div>
+    <div class="video-container">
+        <iframe id="latestVideo" src="https://www.youtube.com/embed/your-youtube-video-id" title="YouTube video player"
+            frameborder="0" allow="encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+
+    <div class="smallercontainer" style="margin-top: 7.5%; font-size:1em">
+        <div class="text-box">
+            <p id="clock"> [00:00:00] AM </p>
+            <p style="color: #1c2e4a; font-size: .5em;"> Version 1.0.0</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>
+            2024 STUDIO SOKKO
+        </p>
+    </footer>
+
+</body>
+
+<script src="script.js"></script>
+<script>
+
+// Create stars for the background
+function createStars(numStars) {
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < numStars; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.top = Math.random() * 100 + 'vh';
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.animationDuration = Math.random() * 3 + 2 + 's'; // Random twinkle duration
+            starsContainer.appendChild(star);
+        }
+    }
+
+    // Add 100 stars to the background
+    createStars(100);
+
+</script>
+</html>
