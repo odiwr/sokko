@@ -1,4 +1,9 @@
 <style>
+    * {
+        overflow: none;
+        overflow: hidden;
+    }
+
     .comingsoon {
         display: flex;
         justify-content: center;
@@ -18,6 +23,12 @@
     #spin {
         width: 10%;
         height: auto;
+    }
+
+    @media only screen and (max-width: 600px) {
+        .comingsoon {
+            background-image: none;
+        }
     }
 </style>
 
