@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sokko</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="https://studiosokko.s3.us-east-2.amazonaws.com/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://studiosokko.s3.us-east-2.amazonaws.com/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://studiosokko.s3.us-east-2.amazonaws.com/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="https://studiosokko.s3.us-east-2.amazonaws.com/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32"
+        href="https://studiosokko.s3.us-east-2.amazonaws.com/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16"
+        href="https://studiosokko.s3.us-east-2.amazonaws.com/favicon/favicon-16x16.png">
     <link rel="manifest" href="https://studiosokko.s3.us-east-2.amazonaws.com/favicon/site.webmanifest">
-    <meta name="theme-color" content="#c4c4c4"/>
+    <meta name="theme-color" content="#c4c4c4" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Noto+Kufi+Arabic:wght@100..900&family=Noto+Serif+JP:wght@200..900&display=swap');
 
         /* General styles */
-        body, html {
+        body,
+        html {
             margin: 0;
             padding: 0;
             height: 100%;
@@ -53,8 +58,12 @@
         }
 
         .tab img {
-            max-height: 80px;
-            max-width: 100%;
+            height: 30px;
+            width: auto;
+        }
+
+        #tab-comingsoon img {
+            height: 80px;
         }
 
         .tab:hover {
@@ -66,12 +75,13 @@
         }
 
         /* Add a margin between tabs */
-        .tab + .tab {
+        .tab+.tab {
             margin-left: 5px;
         }
 
         #content {
-            margin-top: 60px; /* Leave space for the fixed navbar */
+            margin-top: 60px;
+            /* Leave space for the fixed navbar */
             padding: 20px;
             background-color: #dce0df;
             height: calc(100% - 60px);
@@ -104,14 +114,17 @@
                 opacity: 0;
                 transform: scale(0.5);
             }
+
             25% {
                 opacity: 1;
                 transform: scale(1);
             }
+
             75% {
                 opacity: 1;
                 transform: scale(1);
             }
+
             90% {
                 opacity: 1;
                 transform: scale(1);
@@ -133,16 +146,18 @@
         }
     </style>
 </head>
+
 <body>
     <div id="logo-container">
-        <img id="logo" src="https://studiosokko.s3.us-east-2.amazonaws.com/StudioSokkoRemasteredTransparent.png" alt="Logo">
+        <img id="logo" src="https://studiosokko.s3.us-east-2.amazonaws.com/StudioSokkoRemasteredTransparent.png"
+            alt="Logo">
     </div>
 
     <div id="main-container">
         <!-- Navigation Bar -->
         <div id="navbar">
-            <div class="tab active" id="tab-studiosokko" onclick="setActiveTab('studiosokko.html', this)">
-                <img src="https://studiosokko.s3.us-east-2.amazonaws.com/studioSokkoWordTrademark.png" alt="Studio Sokko">
+            <div class="tab active" id="tab-studiosokko" onclick="setActiveTab('sokko.html', this)">
+                <img src="https://studiosokko.s3.us-east-2.amazonaws.com/studio.png" alt="Sokko">
             </div>
             <div class="tab" id="tab-comingsoon" onclick="setActiveTab('comingsoon.html', this)">
                 <img src="https://studiosokko.s3.us-east-2.amazonaws.com/questionMark.png" alt="Coming Soon">
@@ -156,7 +171,7 @@
     </div>
 
     <script>
-                // Function to load content dynamically into the #content div
+        // Function to load content dynamically into the #content div
         function loadContent(page) {
             fetch(page)
                 .then(response => response.text())
@@ -164,7 +179,7 @@
                     document.getElementById('content').innerHTML = html;
 
                     // Check if studiosokko.html is loaded
-                    if (page === 'studiosokko.html') {
+                    if (page === 'sokko.html') {
                         // Call the function to fetch and load the latest YouTube video
                         fetchLatestVideo();
                     }
@@ -186,7 +201,7 @@
 
         // Automatically load the first tab's content on page load
         document.addEventListener('DOMContentLoaded', () => {
-            loadContent('studiosokko.html');
+            loadContent('sokko.html');
         });
 
         // Remove the animation after it's finished
@@ -200,48 +215,48 @@
         const API_KEY = 'AIzaSyAHwr27nI2Z4UK6R876I-hGqwmnxwVp4Hg';
         const CHANNEL_ID = 'UChRUnDg7MbSeG4HZPt5-tyQ';
 
-            async function fetchLatestVideo() {
-        try {
-            // Fetch the list of videos from the channel
-            const response = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=10`);
-            const data = await response.json();
+        async function fetchLatestVideo() {
+            try {
+                // Fetch the list of videos from the channel
+                const response = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=10`);
+                const data = await response.json();
 
-            if (data.items && data.items.length > 0) {
-                for (const item of data.items) {
-                    if (item.id.kind === 'youtube#video') {
-                        const videoId = item.id.videoId;
+                if (data.items && data.items.length > 0) {
+                    for (const item of data.items) {
+                        if (item.id.kind === 'youtube#video') {
+                            const videoId = item.id.videoId;
 
-                        // Fetch video details to check the duration
-                        const videoResponse = await fetch(`https://www.googleapis.com/youtube/v3/videos?key=${API_KEY}&id=${videoId}&part=contentDetails`);
-                        const videoData = await videoResponse.json();
+                            // Fetch video details to check the duration
+                            const videoResponse = await fetch(`https://www.googleapis.com/youtube/v3/videos?key=${API_KEY}&id=${videoId}&part=contentDetails`);
+                            const videoData = await videoResponse.json();
 
-                        // Check if videoData.items is valid and contains the required data
-                        if (videoData.items && videoData.items.length > 0) {
-                            const duration = videoData.items[0].contentDetails.duration;
+                            // Check if videoData.items is valid and contains the required data
+                            if (videoData.items && videoData.items.length > 0) {
+                                const duration = videoData.items[0].contentDetails.duration;
 
-                            // Convert ISO 8601 duration to seconds
-                            const durationSeconds = parseDuration(duration);
+                                // Convert ISO 8601 duration to seconds
+                                const durationSeconds = parseDuration(duration);
 
-                            if (durationSeconds < 31 || durationSeconds > 60) {
-                                // Update iframe with the valid video
-                                const iframe = document.getElementById('youtube-frame');
-                                if (iframe) {
-                                    iframe.src = `https://www.youtube.com/embed/${videoId}`;
+                                if (durationSeconds < 31 || durationSeconds > 60) {
+                                    // Update iframe with the valid video
+                                    const iframe = document.getElementById('youtube-frame');
+                                    if (iframe) {
+                                        iframe.src = `https://www.youtube.com/embed/${videoId}`;
+                                    }
+                                    return; // Exit loop after finding a valid video
                                 }
-                                return; // Exit loop after finding a valid video
+                            } else {
+                                console.warn(`No video details found for videoId: ${videoId}`);
                             }
-                        } else {
-                            console.warn(`No video details found for videoId: ${videoId}`);
                         }
                     }
+                } else {
+                    console.warn('No videos found in the channel.');
                 }
-            } else {
-                console.warn('No videos found in the channel.');
+            } catch (error) {
+                console.error('Error fetching video data:', error);
             }
-        } catch (error) {
-            console.error('Error fetching video data:', error);
         }
-    }
 
         // Helper function to convert ISO 8601 duration to seconds
         function parseDuration(isoDuration) {
@@ -257,4 +272,5 @@
         fetchLatestVideo();
     </script>
 </body>
+
 </html>
