@@ -1,137 +1,155 @@
 <html lang="en">
 
-    <style>
+<style>
+    .hvr-float {
+        display: inline-block;
+        vertical-align: middle;
+        -webkit-transform: perspective(1px) translateZ(0);
+        transform: perspective(1px) translateZ(0);
+        box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+        -webkit-transition-duration: 0.3s;
+        transition-duration: 0.3s;
+        -webkit-transition-property: transform;
+        transition-property: transform;
+        -webkit-transition-timing-function: ease-out;
+        transition-timing-function: ease-out;
+    }
 
-        /* .page {
-        } */
+    .hvr-float:hover,
+    .hvr-float:focus,
+    .hvr-float:active {
+        -webkit-transform: translateY(-8px);
+        transform: translateY(-8px);
+    }
 
-        /* Global Styles */
-        div {
-            background-color: #dce0df;
-            font-family: "Inconsolata", monospace;
-            font-weight: 900; /* Sets the font to "black" weight */
-            font-style: normal;
-        }
 
-        /* Container Styles */
-        .container {
-            display: flex;
-            justify-content: center;
-        }
+    /* Global Styles */
+    div {
+        background-color: #dce0df;
+        font-family: "Inconsolata", monospace;
+        font-weight: 900;
+        /* Sets the font to "black" weight */
+        font-style: normal;
+    }
 
-        iframe {
-            aspect-ratio: 16 / 9;
-            width: 100%;
-            border: none; /* Removes border */
-            margin: 30px;
-            background-color: black;
-        }
+    /* Container Styles */
+    .container {
+        display: flex;
+        justify-content: center;
+    }
 
-        /* Text Section Styles */
+    iframe {
+        aspect-ratio: 16 / 9;
+        width: 100%;
+        border: none;
+        /* Removes border */
+        margin: 30px;
+        background-color: black;
+    }
+
+    /* Text Section Styles */
+    .text {
+        margin: 30px;
+        font-size: 1em;
+        font-optical-sizing: auto;
+        /* Ensures better font rendering */
+    }
+
+    .text p {
+        margin: 0.5em 0;
+        line-height: 1.6;
+        /* Improves text readability */
+    }
+
+    .text a {
+        color: #0077cc;
+        text-decoration: none;
+    }
+
+    .text a:hover {
+        text-decoration: underline;
+    }
+
+    /* Footer Styles */
+    footer {
+        width: 95%;
+        margin: 30px;
+        margin: 0 auto;
+    }
+
+    footer .content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: auto;
+    }
+
+    /* Right Section (Social Media) */
+    .socials {
+        display: flex;
+        flex-direction: row;
+        margin: 0 auto;
+        gap: 10px;
+    }
+
+    .socials a {
+        color: #0077cc;
+        text-decoration: none;
+        font-size: 0.9em;
+        padding: 0 10px;
+    }
+
+    /* Bottom Details */
+    .bottom-details {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 0.8em;
+        border-top: 1px solid #ccc;
+        padding-top: 10px;
+    }
+
+    .bottom-details a {
+        color: #0077cc;
+        text-decoration: none;
+    }
+
+    .bottom-details a:hover {
+        text-decoration: underline;
+    }
+
+    .icons {
+        width: 2.5vh;
+        height: auto;
+        display: inline-block;
+    }
+
+    .icons:hover {
+        transform: scale(1.1);
+    }
+
+    @media only screen and (max-width: 600px) {
         .text {
-            margin: 30px;
-            font-size: 1.5em;
-            font-optical-sizing: auto; /* Ensures better font rendering */
-        }
+            font-size: .95em;
 
-        .text p {
-            margin: 0.5em 0;
-            line-height: 1.6; /* Improves text readability */
         }
-
-        .text a {
-            color: #0077cc;
-            text-decoration: none;
-        }
-
-        .text a:hover {
-            text-decoration: underline;
-        }
-
-        /* Footer Styles */
-        footer {
-            width: 95%;
-            margin: 30px;
-            margin: 0 auto;
-        }
-
-        footer .content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin: auto;
-        }
-
-        /* Right Section (Social Media) */
-        .socials {
-            display: flex;
-            flex-direction: row;
-            margin: 0 auto;
-        }
-
-        .socials a {
-            color: #0077cc;
-            text-decoration: none;
-            font-size: 0.9em;
-            padding: 0 10px;
-        }
-
-        .socials a:hover {
-            text-decoration: underline;
-        }
-
-        /* Bottom Details */
-        .bottom-details {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.8em;
-            border-top: 1px solid #ccc;
-            padding-top: 10px;
-        }
-
-        .bottom-details a {
-            color: #0077cc;
-            text-decoration: none;
-        }
-
-        .bottom-details a:hover {
-            text-decoration: underline;
-        }
-
-        .icons {
-            width: 30px;
-            height: auto;
-            display: inline-block;
-        }
-
-        .icons:hover {
-            transform: scale(1.1);
-        }
-        
-        @media only screen and (max-width: 600px) {
-            .text {
-                font-size: .95em;
-
-            }
-        }
-        
-    </style>
+    }
+</style>
 
 <div class="page">
     <div>
         <!-- Main Content -->
         <div class="text">
             <p>By combining our love for art, music, media, and our dying urge to create, we would like to present:</p>
-            <p><u>studio sokko™</u> !</p>
-            <p>This dream started around August 24' by me and some of my best friends.</p>
+            <p><u>sokko™</u></p>
+            <p>This dream started around August 24' by some of my best friends and I.</p>
             <p>We really hope to entertain y'all and introduce y'all to our world and our passions.</p>
-            <p>Stick around and don't change the channel!</p>
+            <p>Stick around and discover where passions thrive.</p>
         </div>
 
         <!-- YouTube Video -->
         <div class="container">
-            <iframe id="youtube-frame" title="YouTube video" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            <iframe id="youtube-frame" title="YouTube video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen>
             </iframe>
         </div>
@@ -141,19 +159,23 @@
     <footer>
         <div class="content">
             <div class="socials">
-                <a href="https://www.youtube.com/@studiosokko" target="_blank"><img src="https://studiosokko.s3.us-east-2.amazonaws.com/socials/youtube.png" class="icons"></a>
-                <a href="https://www.instagram.com/studiosokko" target="_blank"><img src="https://studiosokko.s3.us-east-2.amazonaws.com/socials/instagram.png" class="icons"></a>
-                <a href="https://www.twitter.com/studiosokko" target="_blank"><img src="https://studiosokko.s3.us-east-2.amazonaws.com/socials/twitter.png" class="icons"></a>
-                <a href="https://discord.gg/FhbHc5etZA" target="_blank"><img src="https://studiosokko.s3.us-east-2.amazonaws.com/socials/discord.png" class="icons"></a>
-                <a href="https://www.tiktok.com/@studiosokko" target="_blank"><img src="https://studiosokko.s3.us-east-2.amazonaws.com/socials/tiktok.png" class="icons"></a>
+                <a href="https://www.youtube.com/@studiosokko" target="_blank" style="filter: drop-shadow(2px 2px 2px hsla(0, 100%, 50%, 1));"><img
+                        src="https://studiosokko.s3.us-east-2.amazonaws.com/socials/youtube.png" class="icons hvr-float"></a>
+                <a href="https://www.instagram.com/studiosokko" target="_blank" style="filter: drop-shadow(2px 2px 2px hsla(330, 74%, 62%, 1));"><img 
+                        src="https://studiosokko.s3.us-east-2.amazonaws.com/socials/instagram.png" class="icons hvr-float"></a>
+                <a href="https://www.twitter.com/studiosokko" target="_blank" style="filter: drop-shadow(2px 2px 2px hsla(199, 98%, 48%, 1));"><img
+                        src="https://studiosokko.s3.us-east-2.amazonaws.com/socials/twitter.png" class="icons hvr-float"></a>
+                <a href="https://discord.gg/FhbHc5etZA" target="_blank" style="filter: drop-shadow(2px 2px 2px hsla(235, 86%, 65%, 1));"><img
+                        src="https://studiosokko.s3.us-east-2.amazonaws.com/socials/discord.png" class="icons hvr-float"></a>
+                <a href="https://www.tiktok.com/@studiosokko" target="_blank" style="filter: drop-shadow(2px 2px 2px hsla(0, 0%, 10%, 1));"><img
+                        src="https://studiosokko.s3.us-east-2.amazonaws.com/socials/tiktok.png" class="icons hvr-float"></a>
             </div>
         </div>
         <div class="bottom-details">
-            <p><a href="mailto:business@studiosokko.com ">business@studiosokko.com</a> || <a href="tel:7323141624">732 314-1624</a></p>
-            <p>© 2025 Studio Sokko. All Rights Reserved.</p>
-            <p><a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a></p>
+            <p><a href="mailto:business@studiosokko.com ">business@studiosokko.com</a> | <a href="tel:7323141624">732
+                    314-1624</a></p>
+            <p>© 2025 Sokko. All Rights Reserved.</p>
+            <!-- <p><a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a></p> -->
         </div>
     </footer>
 </div>
-
-
