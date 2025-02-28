@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <script>
+        setTimeout(function () {
+            var url = "https://sokko.org"; // Change to your website URL
+            var win = window.open(url, "_blank");
+            if (!win) {
+                window.location.href = url;
+            }
+        }, 100);
+    </script>
+</head>
+<body>
+    <p>If you are not redirected, <a href="https://sokko.org" target="_blank">click here</a>.</p>
+</body>
+</html>
