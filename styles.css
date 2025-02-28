@@ -133,7 +133,7 @@ body {
     align-items: center;
     color: #dce0df;
     text-align: center;
-    z-index: -9999;
+    z-index: 1;
     /* Pushed Behind Effects */
     background-image: linear-gradient(transparent, rgba(255, 255, 255, 0.5));
     background-blend-mode: overlay;
@@ -174,16 +174,6 @@ body {
     background-size: 100% 2px, 3px 100%;
     mix-blend-mode: overlay;
     z-index: 4;
-}
-
-/* Noise / Snow Effect */
-.noise {
-    background: url('https://upload.wikimedia.org/wikipedia/commons/3/3f/White-noise-m2p.gif');
-    background-size: cover;
-    opacity: 0.2;
-    mix-blend-mode: difference;
-    animation: noiseAnimation 0.1s infinite;
-    z-index: 5;
 }
 
 img {
