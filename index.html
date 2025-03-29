@@ -1,41 +1,388 @@
+<!-- SOKKO
+                                                                                                                                  
+                       @@@@@@@@@@@@@@@@@@                                                                                         
+                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@&                                                                                   
+             @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                             @@@@@@@@@@@@                       
+          @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                   @@@@@@@@@@@@@@@@@@@@@@@@@@                
+        @@@@@@@@@@@@@@@@@@@@@@   @@@@@@@@@@@@@@@@@@@@@@@                            @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@            
+      @@@@@@@@@@@@@@@@         @@        @@@@@@@@@@@@@@@@,                       @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@         
+    @@@@@@@@@@@@@@@          @@@@@@          @@@@@@@@@@@@@@                   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@      
+   @@@@@@@@@@@@@            @@@@@@@@           @@@@@@@@@@@@@                @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    
+  @@@@@@@@@@@@@           @@@@@@@@@@@            @@@@@@@@@@@@              @@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@@@@@@@/@@@@@@@@@@@@@   
+  @@@@@@@@@@@    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   @@@@@@@@@@@@            @@@@@@@@@@@  @@@@@@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@  
+ @@@@@@@@@@@@   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   @@@@@@@@@@@           @@@@@@@@@@@  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@ 
+ @@@@@@@@@@@      @@@@@@@@@@@@@@@@@@@@@@@@@@@@     @@@@@@@@@@@@         @@@@@@@@@@@  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   @@@@@@@@@@@
+ @@@@@@@@@@@        @@@@@@@@@@@@@@@@@@@@@@@        @@@@@@@@@@@@         @@@@@@@@@@   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   @@@@@@@@@@
+ @@@@@@@@@@@          @@@@@@@@@@@@@@@@@@@          @@@@@@@@@@@         @@@@@@@@@@@    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    @@@@@@@@@@
+ @@@@@@@@@@@@         @@@@@@@@@@@@@@@@@@@@        @@@@@@@@@@@@          @@@@@@@@@@    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    @@@@@@@@@@
+  @@@@@@@@@@@@       @@@@@@@@@@@@@@@@@@@@@       @@@@@@@@@@@@@          @@@@@@@@@@@     @@@@@@@@@@@@@@@@@@@@@@@@@@     @@@@@@@@@@@
+   @@@@@@@@@@@@      @@@@@@@@     @@@@@@@@      @@@@@@@@@@@@@            @@@@@@@@@@@@     @@@@@@@@@@@@@@@@@@@@@@     @@@@@@@@@@@@ 
+    @@@@@@@@@@@@@     @@               @@@    @@@@@@@@@@@@@@              @@@@@@@@@@@@@@@@   @@@@@@@@@@@@@@@@   @@@@@@@@@@@@@@@@  
+     @@@@@@@@@@@@@@@                       @@@@@@@@@@@@@@@                  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    
+       @@@@@@@@@@@@@@@@@@              @@@@@@@@@@@@@@@@@@                     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@      
+         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                           @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@          
+           /@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                    @@@@@@@@@@@@@@@@@@@@@@@@@@                
+               @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                                                                 
+                   .@@@@@@@@@@@@@@@@@@@@@@@@                                                                                      
+                                                                                                                                                                                                                                                            
+Made by: https://odiwr.com
+Year: 2025 - Present
+Contact: biz@odiwr.com 
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>sokko</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="favicon_io/android-chrome-192x192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="favicon_io/android-chrome-512x512.png">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="favicon/site.webmanifest">
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+
+    </style>
 </head>
 
 <body>
-    <div class="screen-container">
-        
-        <div class="screen-wrapper">
-            
-            <div id="screen">
+    <div id="overlay" class="overlay"></div>
 
-                <div class="grain content">
+    <header id="header" class="blackBG">
+        <nav class="navbar navbar-expand-md">
+            <div class="container d-flex align-items-center justify-content-between position-relative">
+                <a class="navbar-brand" href="#" id="blurWrapper">
+                    <img src="images/sokkoWhite.gif" alt="" />
+                </a>
 
-                    <h1 id="countdown"></h1>
-                    <img src="images/sokkoLogo_White_Transparent.png">
+                <div class="d-md-none hamburger" id="hamburgerBtn">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+
+                <div class="collapse navbar-collapse justify-content-end d-none d-md-flex">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+                        <li class="nav-item dropdown-parent">
+                            <a class="nav-link desktop-dropdown-trigger">About</a>
+                            <div class="desktop-dropdown">
+                                <a href="#">Coming Soon :)</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown-parent">
+                            <a class="nav-link desktop-dropdown-trigger">Network</a>
+                            <div class="desktop-dropdown">
+                                <a href="#">Coming Soon :)</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown-parent">
+                            <a class="nav-link desktop-dropdown-trigger">Shop</a>
+                            <div class="desktop-dropdown">
+                                <a href="#">Coming NOT Soon :(</a>
+                            </div>
+                        </li>
+
+                    </ul>
+        </nav>
+
+        </div>
+
+        <div id="mobileNav">
+            <div id="mobileNavItems">
+                <a class="main-link" href="#">HOME</a>
+
+                <div class="dropdown-group">
+                    <a class="main-link dropdown-trigger">ABOUT <img src="images/tylerGuy.svg" class="inline-icon" />
+                    </a>
+                    <div class="dropdown-items">
+                        <a href="#">> Coming Soon :)</a>
+                    </div>
+                </div>
+
+                <div class="dropdown-group">
+                    <a class="main-link dropdown-trigger">NETWORK <img src="images/redDotThing.svg"
+                            class="inline-icon" /> </a>
+                    <div class="dropdown-items">
+                        <a href="#">> Coming Soon :)</a>
+                    </div>
+                </div>
+
+                <div class="dropdown-group">
+                    <a class="main-link dropdown-trigger">SHOP <img src="images/catGuy-20.svg" class="inline-icon" />
+                    </a>
+                    <div class="dropdown-items">
+                        <a href="#">> Coming NOT Soon :(</a>
+                    </div>
+                </div>
+
+                <div class="dropdown-group">
+                    <a class="main-link dropdown-trigger">SOCIALS <img src="images/BMOGuy.svg" class="inline-icon" />
+                    </a>
+                    <div class="dropdown-items">
+                        <a href="https://www.instagram.com/sokko_org/">> Instagram</a>
+                        <a href="https://www.youtube.com/@sokko_org">> YouTube</a>
+                        <a href="https://discord.gg/bkaARzgwDD">> Discord</a>
+                        <a href="https://www.tiktok.com/@sokko_org">> TikTok</a>
+                        <a href="https://x.com/sokko_org">> Twitter</a>
+                        <a href="https://www.facebook.com/share/1KzHTo3NC7/?mibextid=wwXIfr">> Facebook</a>
+                    </div>
                 </div>
             </div>
-            <div class="fx vignette"></div>
-            <div class="fx scanlines"></div>
-            <div class="fx noise snow"></div>
         </div>
-    </div>
-</body>
+    </header>
 
-<script src="script.js"></script>
+    <div id="blurWrapper">
+        <section class="hero-banner blackBG">
+            <video autoplay muted loop playsinline class="banner-video">
+                <source src="banner/summer2.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
+            <div class="banner-overlay">
+                <img class="hero-img" src="images\sokkoWordmarkWhite.svg">
+            </div>
+            <div class="banner-info" id="bannerInfo">
+                <div id="currentTime">Loading time...</div>
+                <div>Old Bridge, NJ</div>
+                <div id="weather">Loading weather...</div>
+                <div>© 2025 Sokko</div>
+            </div>
+        </section>
+
+        <section class="welcome-section">
+            <span class="Helvetica">Welcome to</span>
+            <span class="creato-display">Sokko</span> —
+            <span class="Helvetica">a</span>
+            <span class="pill-box basheq creative-pill">creative</span>
+            <span class="Helvetica">animation and film studio bringing</span>
+            <span class="creato-display">visions</span>
+            <span class="Helvetica">to life. Follow us on our journey to create, reinvent, and</span>
+            <span class="creato-display">inspire</span>.
+            <img src="images/lilGuyColor.svg" class="inline-icon" />
+        </section>
+
+        <section class="container youtube-video-section">
+            <h2 class="youtube-section-title alteHaasGrotesk">LATEST<img src="images/emojis/star_flat.svg"
+                    class="emoji-svg" />
+            </h2>
+            <div class="youtube-video-container" id="youtubeContainer">
+                <iframe id="latestVideo" allowfullscreen style="display: none;"></iframe>
+                <div class="youtube-video-placeholder" id="videoPlaceholder">it's sokkover :(</div>
+            </div>
+
+            <div id="videoDescription" class="video-description mt-3"></div>
+        </section>
+
+        <main class="container py-5" id="mainContent">
+            <h2 class="section-title alteHaasGrotesk">PROJECTS<img src="images/emojis/eyes_flat.svg"
+                    class="emoji-svg" /></h2>
+
+
+            <div class="row g-4">
+                <div class="col-6 col-md-3">
+                    <a href="https://www.instagram.com/p/DGhlr-TuLxS/?img_index=1" target="_blank" class="project-item">
+                        <img src="proj/NHIL.gif" alt="Project 1" />
+                        <div class="project-details">
+                            <div class="project-title">NO HUMAN IS LIMITED</div>
+                            <div class="project-subtext">Graphic Design</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-md-3">
+                    <a href="https://www.instagram.com/p/DGECzuKyhsB/?img_index=1" target="_blank" class="project-item">
+                        <img src="proj/LIMBO.gif" alt="Project 2" />
+                        <div class="project-details">
+                            <div class="project-title">LIMBO</div>
+                            <div class="project-subtext">Graphic Design</div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </main>
+
+        <section class="container py-5 creative-profiles-section">
+            <div class="creative-profiles-header mb-4 alteHaasGrotesk">
+                <div>
+                    <h2>CREATIVE PROFILES<img src="images/emojis/people_hugging_flat.svg" class="emoji-svg" />
+                    </h2>
+
+                    <p class="subtext">The people behind the project.</p>
+                </div>
+                <div class="nav-arrows">
+                    <button id="scrollLeft">&lt;</button>
+                    <button id="scrollRight">&gt;</button>
+                </div>
+            </div>
+
+
+            <div class="creative-profiles-container">
+                <div class="creative-profiles d-flex flex-nowrap">
+
+                    <!-- BILL -->
+                    <div class="profile-card">
+                        <a href="https://odiwr.com" target="_blank">
+                            <div class="profile-image">
+                                <img src="profiles\bill.png" alt="Profile 1">
+                            </div>
+                        </a>
+                        <div class="profile-pills">
+                            <a href="https://www.google.com/maps/place/Kenya/@0.1598971,35.2669829,7z/data=!3m1!4b1!4m6!3m5!1s0x182780d08350900f:0x403b0eb0a1976dd9!8m2!3d-0.023559!4d37.906193!16zL20vMDE5cmc1?entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoJLDEwMjExNDU1SAFQAw%3D%3D"
+                                target="_blank" class="pill">Kenya</a>
+                        </div>
+                        <a href="https://odiwr.com" target="_blank" class="profile-name">Bill Odiwuor
+                            Kawaka</a>
+                        <a href="https://odiwr.com" target="_blank" class="profile-title">Creative
+                            Director /
+                            CEO</a>
+                    </div>
+
+                    <!-- TYLER -->
+                    <div class="profile-card">
+                        <a href="https://www.instagram.com/tylerorwa/" target="_blank">
+                            <div class="profile-image">
+                                <img src="profiles\tyler.png" alt="Profile 2">
+                            </div>
+                        </a>
+                        <div class="profile-pills">
+                            <a href="https://www.google.com/maps/place/Kenya/@0.1598971,35.2669829,7z/data=!3m1!4b1!4m6!3m5!1s0x182780d08350900f:0x403b0eb0a1976dd9!8m2!3d-0.023559!4d37.906193!16zL20vMDE5cmc1?entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoJLDEwMjExNDU1SAFQAw%3D%3D"
+                                target="_blank" class="pill">Kenya</a>
+                        </div>
+                        <a href="https://www.instagram.com/tylerorwa/" target="_blank" class="profile-name">Tyler
+                            Orwa</a>
+                        <a href="https://www.instagram.com/tylerorwa/" target="_blank" class="profile-title">Business
+                            Manager</a>
+                    </div>
+
+                    <!-- SANPHA -->
+                    <div class="profile-card">
+                        <a href="https://www.instagram.com/jun3.blk/" target="_blank">
+                            <div class="profile-image">
+                                <img src="profiles\sanpha.png" alt="Profile 2">
+                            </div>
+                        </a>
+                        <div class="profile-pills">
+                            <a href="https://www.google.com/maps/place/Sierra+Leone/@8.4171038,-14.3383674,8z/data=!3m1!4b1!4m6!3m5!1s0xf0106183aabf343:0x5369e9cdc72cf719!8m2!3d8.460555!4d-11.779889!16zL20vMDZzXzI?entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoJLDEwMjExNDU1SAFQAw%3D%3D"
+                                target="_blank" class="pill">Sierra Leone</a>
+                        </div>
+                        <a href="https://www.instagram.com/jun3.blk/" target="_blank" class="profile-name">Sanpha
+                            Kamara</a>
+                        <a href="https://www.instagram.com/jun3.blk/" target="_blank" class="profile-title">Head
+                            Animator</a>
+                    </div>
+
+                    <!-- BENJI -->
+                    <div class="profile-card">
+                        <a href="https://www.instagram.com/benji.odhiambo/" target="_blank">
+                            <div class="profile-image">
+                                <img src="profiles\benji.png" alt="Profile 2">
+                            </div>
+                        </a>
+                        <div class="profile-pills">
+                            <a href="https://www.google.com/maps/place/Kenya/@0.1598971,35.2669829,7z/data=!3m1!4b1!4m6!3m5!1s0x182780d08350900f:0x403b0eb0a1976dd9!8m2!3d-0.023559!4d37.906193!16zL20vMDE5cmc1?entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoJLDEwMjExNDU1SAFQAw%3D%3D"
+                                target="_blank" class="pill">Kenya</a>
+                        </div>
+                        <a href="https://www.instagram.com/benji.odhiambo/" target="_blank" class="profile-name">Benji
+                            Odhiambo</a>
+                        <a href="https://www.instagram.com/benji.odhiambo/" target="_blank" class="profile-title">Music
+                            Director</a>
+                    </div>
+
+                    <!-- MD -->
+                    <div class="profile-card">
+                        <a href="https://www.instagram.com/md.sahib_/" target="_blank">
+                            <div class="profile-image">
+                                <img src="profiles\md.png" alt="Profile 2">
+                            </div>
+                        </a>
+                        <div class="profile-pills">
+                            <a href="https://www.google.com/maps/place/Bangladesh/@23.4894442,87.7036576,7z/data=!3m1!4b1!4m6!3m5!1s0x30adaaed80e18ba7:0xf2d28e0c4e1fc6b!8m2!3d23.684994!4d90.356331!16zL20vMDE2MmI?entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoJLDEwMjExNDU1SAFQAw%3D%3D"
+                                target="_blank" class="pill">Bangladesh</a>
+                        </div>
+                        <a href="https://www.instagram.com/md.sahib_/" target="_blank" class="profile-name">Md Sahib</a>
+                        <a href="https://www.instagram.com/md.sahib_/" target="_blank" class="profile-title">What Does
+                            He
+                            Do?</a>
+                    </div>
+
+                    <!-- THOMAS -->
+                    <div class="profile-card">
+                        <a href="https://www.instagram.com/durpynoob18/" target="_blank">
+                            <div class="profile-image">
+                                <img src="profiles/thomas.png" alt="Profile 2">
+                            </div>
+                        </a>
+                        <div class="profile-pills">
+                            <a href="https://www.google.com/maps/place/Philippines/@11.6600776,117.3269219,6z/data=!3m1!4b1!4m6!3m5!1s0x324053215f87de63:0x784790ef7a29da57!8m2!3d12.879721!4d121.774017!16zL20vMDV2OGM?entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoJLDEwMjExNDU1SAFQAw%3D%3D"
+                                target="_blank" class="pill">Philippines</a>
+                        </div>
+                        <a href="https://www.instagram.com/durpynoob18/" target="_blank" class="profile-name">Thomas
+                            Estrada</a>
+                        <a href="https://www.instagram.com/durpynoob18/" target="_blank" class="profile-title">Music
+                            Composer</a>
+                    </div>
+
+                    <!-- JESSE -->
+                    <div class="profile-card">
+                        <a href="https://www.instagram.com/jesse_26_/" target="_blank">
+                            <div class="profile-image">
+                                <img src="profiles/jesse.png" alt="Profile 2">
+                            </div>
+                        </a>
+                        <div class="profile-pills">
+                            <a href="https://www.google.com/maps/place/Puerto+Rico/@18.2221126,-67.324478,9z/data=!3m1!4b1!4m6!3m5!1s0x8c0296261b92a7f9:0xf336ec2818049b1a!8m2!3d18.220833!4d-66.590149!16zL20vMDVyN3Q?entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoJLDEwMjExNDU1SAFQAw%3D%3D"
+                                target="_blank" class="pill">Puerto Rico</a>
+                        </div>
+                        <a href="https://www.instagram.com/jesse_26_/" target="_blank" class="profile-name">Jesse
+                            Rodriguez</a>
+                        <a href="https://www.instagram.com/jesse_26_/" target="_blank" class="profile-title">Head
+                            Artist</a>
+                    </div>
+
+                </div>
+
+        </section>
+
+        <footer class="container d-flex justify-content-between align-items-center py-3" id="footerContent">
+            <div class="footer-text">
+                &copy; 2025 Sokko. All rights reserved.
+                <a href="mailto:business@studiosokko.com"></a>
+            </div>
+            <div class="social-icons">
+                <a href="https://www.instagram.com/sokko_org/"><i class="bi bi-instagram"></i></a>
+                <a href="https://www.youtube.com/@sokko_org"><i class="bi bi-youtube"></i></a>
+                <a href="https://discord.gg/bkaARzgwDD"><i class="bi bi-discord"></i></a>
+                <a href="https://www.tiktok.com/@sokko_org"><i class="bi bi-tiktok"></i></a>
+                <a href="https://x.com/sokko_org"><i class="bi bi-twitter"></i></a>
+                <a href="https://www.facebook.com/share/1KzHTo3NC7/?mibextid=wwXIfr"><i class="bi bi-facebook"></i></a>
+            </div>
+
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="scripts.js"></script>
+
+
+</body>
 
 </html>
