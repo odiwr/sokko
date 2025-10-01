@@ -336,6 +336,15 @@
             opacity: .55;
         }
 
+        .nav-list li:not(:first-child) a:hover {
+            opacity: 1;
+        }
+
+        .nav-list a:hover {
+            background-color:yellow;
+            color:#000;
+        }
+
         @keyframes dropIn {
             from {
                 opacity: 0;
@@ -470,12 +479,13 @@
     <aside id="navPanel" class="nav-panel" aria-hidden="true">
         <nav aria-label="Primary">
             <ul class="nav-list">
-                <li><a href="#home">HOME</a></li>
-                <li><a href="#projects">PROJECTS</a></li>
+                <li><a href="/">HOME</a></li>
+                <li><a href="palette.html">PALETTE</a></li>
+                <!-- <li><a href="#projects">PROJECTS</a></li>
                 <li><a href="#creatives">CREATIVES</a></li>
                 <li><a href="#network">NETWORK</a></li>
                 <li><a href="#shop">SHOP</a></li>
-                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#about">ABOUT</a></li> -->
             </ul>
         </nav>
     </aside>
