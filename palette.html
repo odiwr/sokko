@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- sokko.org/palette — A24-inspired layout, cohesive with index.html -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sokko </title>
+    <meta name="description"
+        content="Sokko is a film and animation studio. We’re currently rebuilding our site* don’t change the channel, we’ll be back." />
+    <meta name="keywords"
+        content="Sokko, film studio, animation studio, idk Studios, idkstudios.org, production, post-production" />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://sokko.org/" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="The Sokko Palette — Sokko" />
+    <meta property="og:description"
+        content="Objectives, proposal, and submission for Sokko's community logo project." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://sokko.org/palette.html" />
+    <meta property="og:image" content="https://sokko.org/og-image.jpg" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="The Sokko Palette — Sokko" />
+    <meta name="twitter:description"
+        content="Objectives, proposal, and submission for Sokko's community logo project." />
+    <meta name="twitter:image" content="https://sokko.org/og-image.jpg" />
+
+    <!-- Favicons (match index.html) -->
+    <link rel="icon" href="assets/favicon/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon/favicon.svg">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
+
+    <!-- Font to match index.html vibe -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- EmailJS (fill your service + template IDs below) -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+    <style>
+        :root {
+            --gap-x: 5px;
+            --gap-top: 5px;
+            --radius: 60px;
+            --panelW: 420px;
+            --panelOffset: 24px;
+            --panelPadX: 32px;
+            --panelLeftBack: 24px;
+            --pausePx: 280px;
+            --z-ui: 20;
+            --speed: 660ms;
+            --ease: cubic-bezier(.2, .9, .1, 1);
+            --itemSpeed: 260ms;
+            --itemStagger: 120ms;
+            --logoW: 70px;
+            --fg: #fff;
+            --bg: #000;
+            --muted: rgba(255, 255, 255, .75);
+            --line: rgba(255, 255, 255, .14);
+            --card: #0a0a0a;
+            --card2: #0e0e0e;
+            --accent: #ffffff;
+            --maxW: 1080px;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            background: #000;
+            color: #fff;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale
+        }
+
+        body {
+            overscroll-behavior: none
+        }
+
+        /* Topbar (open/close button + logo) — copied from index.html for cohesion */
+        .topbar {
+            position: fixed;
+            top: 50px;
+            left: calc(var(--panelOffset) + var(--panelPadX));
+            right: 8px;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px
+        }
+
+        .nav-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            background: #000;
+            color: #fff;
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+            transition: background .25s, color .25s
+        }
+
+        body[data-open="true"] .nav-toggle {
+            background: #fff;
+            color: #000
+        }
+
+        .nav-toggle .icon {
+            width: 22px;
+            height: 22px;
+            display: block
+        }
+
+        .nav-toggle .icon .bar {
+            transition: transform .28s var(--ease), opacity .2s;
+            transform-origin: 50% 50%;
+            stroke: currentColor
+        }
+
+        .nav-toggle:not([data-state="close"]) .bar.top {
+            transform: translateY(-5px)
+        }
+
+        .nav-toggle:not([data-state="close"]) .bar.mid {
+            opacity: 1
+        }
+
+        .nav-toggle:not([data-state="close"]) .bar.bot {
+            transform: translateY(5px)
+        }
+
+        .nav-toggle[data-state="close"] .bar.top {
+            transform: rotate(45deg)
+        }
+
+        .nav-toggle[data-state="close"] .bar.mid {
+            opacity: 0
+        }
+
+        .nav-toggle[data-state="close"] .bar.bot {
+            transform: rotate(-45deg)
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex: 0 0 var(--logoW);
+            width: var(--logoW);
+            padding-right: 2%
+        }
+
+        .logo img {
+            width: 100%;
+            height: auto;
+            display: block
+        }
+
+        /* Slide-in nav (desktop) / overlay (mobile) — copied & trimmed from index */
+        .nav-panel {
+            position: fixed;
+            top: 0;
+            left: var(--panelOffset);
+            height: 100vh;
+            width: min(calc(100vw - calc(var(--panelOffset)*2)), var(--panelW));
+            background: #000;
+            transform: translateX(-120%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            padding: 32px var(--panelPadX)
+        }
+
+        .nav-panel::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: calc(-1 * var(--panelLeftBack));
+            width: var(--panelLeftBack);
+            height: 100%;
+            background: #000
+        }
+
+        @keyframes p5-swoop {
+            0% {
+                transform: translateX(-120%)
+            }
+
+            70% {
+                transform: translateX(calc(-1 * var(--pausePx)))
+            }
+
+            82% {
+                transform: translateX(calc(-1 * var(--pausePx)))
+            }
+
+            100% {
+                transform: translateX(0%)
+            }
+        }
+
+        @keyframes p5-out {
+            from {
+                transform: translateX(0%)
+            }
+
+            to {
+                transform: translateX(-120%)
+            }
+        }
+
+        .nav-panel.anim-in {
+            animation: p5-swoop var(--speed) var(--ease) forwards
+        }
+
+        .nav-panel.anim-out {
+            animation: p5-out 420ms var(--ease) forwards
+        }
+
+        .nav-list {
+            list-style: none;
+            margin: 140px 0 0;
+            padding: 0
+        }
+
+        .nav-list li {
+            opacity: 0;
+            transform: translateY(-18px);
+            will-change: transform, opacity
+        }
+
+        .nav-list a {
+            display: block;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 800;
+            letter-spacing: .02em;
+            text-transform: uppercase;
+            line-height: 1.05;
+            font-size: clamp(30px, 4.5vw, 68px);
+            padding: 0 var(--panelPadX);
+            padding-left: 0
+        }
+
+        .nav-list li:first-child a {
+            opacity: .55;
+        }
+
+        .nav-list li:first-child a:hover {
+            opacity: 1;
+        }
+
+        .nav-list a:hover {
+            background-color: yellow;
+            color: #000;
+        }
+
+
+        @keyframes dropIn {
+            from {
+                opacity: 0;
+                transform: translateY(-18px) skewY(-3deg)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) skewY(0deg)
+            }
+        }
+
+        body.menu-ready .nav-list li:first-child {
+            animation: dropIn var(--itemSpeed) var(--ease) forwards
+        }
+
+        body.items-in .nav-list li:nth-child(2) {
+            animation: dropIn var(--itemSpeed) var(--ease) forwards;
+            animation-delay: calc(var(--itemStagger) * 1)
+        }
+
+        body.items-in .nav-list li:nth-child(3) {
+            animation: dropIn var(--itemSpeed) var(--ease) forwards;
+            animation-delay: calc(var(--itemStagger) * 2)
+        }
+
+        body.items-in .nav-list li:nth-child(4) {
+            animation: dropIn var(--itemSpeed) var(--ease) forwards;
+            animation-delay: calc(var(--itemStagger) * 3)
+        }
+
+        body.items-in .nav-list li:nth-child(5) {
+            animation: dropIn var(--itemSpeed) var(--ease) forwards;
+            animation-delay: calc(var(--itemStagger) * 4)
+        }
+
+        body.items-in .nav-list li:nth-child(6) {
+            animation: dropIn var(--itemSpeed) var(--ease) forwards;
+            animation-delay: calc(var(--itemStagger) * 5)
+        }
+
+        /* Mobile adjustments */
+        @media (max-width:900px) {
+            .logo {
+                display: none
+            }
+
+            .topbar {
+                top: 8px;
+                left: 28px;
+                right: 12px;
+                z-index: 2001
+            }
+
+            .nav-toggle .label {
+                display: none
+            }
+
+            .nav-toggle {
+                margin-top: 15px;
+                background-color: transparent;
+                color: #fff
+            }
+
+            .nav-panel {
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                padding: 24px 28px;
+                transform: none;
+                opacity: 0;
+                pointer-events: none;
+                z-index: 2000
+            }
+
+            .nav-panel.anim-in,
+            .nav-panel.anim-out {
+                animation: none !important
+            }
+
+            body[data-open="true"] .nav-panel {
+                opacity: 1;
+                pointer-events: auto;
+                transition: opacity 220ms ease
+            }
+
+            .nav-list {
+                margin-top: 100px
+            }
+
+            .nav-list a {
+                font-size: clamp(44px, 12vw, 112px);
+                padding: 0 28px;
+                padding-left: 0
+            }
+        }
+
+        /* Page body */
+        main {
+            position: relative;
+            z-index: var(--z-ui);
+            padding: 140px 24px 80px;
+            max-width: var(--maxW);
+            margin: 0 auto
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            font-size: clamp(22px, 2.6vw, 40px);
+            letter-spacing: .04em;
+            font-weight: 800;
+            text-transform: lowercase;
+            text-shadow: 0 2px 24px rgba(0, 0, 0, .45);
+            font-family: 'Space Mono', monospace
+        }
+
+        .sub {
+            margin: 0 0 24px;
+            font-size: clamp(12px, 1.6vw, 16px);
+            color: var(--muted);
+            font-family: 'Space Mono', monospace
+        }
+
+        /* Actions row */
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-left: auto;
+            /* ← add this line */
+        }
+
+        .actions a {
+            background-color: white;
+            color: #000;
+            border: 1px solid rgb(255, 255, 255);
+        }
+
+        .actions a:hover {
+            background-color: rgba(255, 255, 255, 0.752);
+
+        }
+
+        @media (max-width: 716px) {
+            .tabs {
+                flex-wrap: wrap;
+                /* allow a new row */
+                align-items: flex-start;
+            }
+
+            .btn {
+                height: 12px;
+                font-size: 11px;
+                width: auto;
+                padding: 0;
+            }
+
+            .tabs .actions {
+                order: -1;
+                /* move before the tab buttons */
+                flex-basis: 100%;
+                /* take full row */
+                margin-left: 0;
+                /* stop pushing to the right */
+                justify-content: flex-end;
+                /* left-justify buttons */
+                column-gap: 10px;
+                margin-bottom: 15px;
+
+            }
+        }
+
+        .btn {
+            appearance: none;
+            border: 1px solid var(--line);
+            background: #000;
+            color: #fff;
+            padding: 10px 14px;
+            font-weight: 700;
+            letter-spacing: .02em;
+            text-transform: uppercase;
+            font-family: 'Space Mono', monospace;
+            cursor: pointer
+        }
+
+        .btn:hover {
+            background: #111
+        }
+
+        /* Card / sections */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            padding: 18px 18px;
+            border-radius: 0
+        }
+
+        .stack {
+            display: grid;
+            gap: 18px
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px
+        }
+
+        @media (max-width:900px) {
+            .grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .legend {
+            font-size: 12px;
+            color: var(--muted);
+            margin: 8px 0 0
+        }
+
+        /* Tabs (Objectives / Proposal / Submission) */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin: 24px 0
+        }
+
+        .tab {
+            border: 1px solid var(--line);
+            padding: 8px 12px;
+            background: #000;
+            color: #fff;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-family: 'Space Mono', monospace;
+            cursor: pointer
+        }
+
+        .tab[aria-selected="true"] {
+            background: #111
+        }
+
+        .panel {
+            display: none
+        }
+
+        .panel[data-active="true"] {
+            display: block
+        }
+
+        /* Forms */
+        form {
+            display: grid;
+            gap: 12px
+        }
+
+        label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            color: var(--muted)
+        }
+
+        input,
+        textarea {
+            width: 90%;
+            padding: 12px 12px;
+            background: #0b0b0b;
+            border: 1px solid var(--line);
+            color: #fff;
+            font-family: inherit
+        }
+
+        .long {
+            width: 95%;
+        }
+
+        textarea {
+            min-height: 140px;
+            resize: none;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        @media (max-width:700px) {
+            .row {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .required::after {
+            content: " *";
+            color: #f34444
+        }
+
+        .foot-note {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 8px
+        }
+
+        .success,
+        .error {
+            font-size: 13px
+        }
+
+        .success {
+            color: #7CFC9A
+        }
+
+        .error {
+            color: #ff6b6b
+        }
+
+        /* Disclaimer modal */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .72);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            z-index: 3000
+        }
+
+        .modal[open] {
+            display: flex
+        }
+
+        .modal-card {
+            max-width: 760px;
+            background: #0b0b0b;
+            border: 1px solid var(--line);
+            padding: 20px
+        }
+
+        .modal-card h3 {
+            margin: 0 0 6px;
+            font-size: 20px
+        }
+
+        .modal-card p {
+            color: var(--muted);
+            line-height: 1.6
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 14px
+        }
+
+        /* Sticky footer legal */
+        footer {
+            max-width: var(--maxW);
+            margin: 40px auto 40px;
+            padding: 0 24px
+        }
+
+        footer .legal {
+            font-size: 12px;
+            color: var(--muted);
+            padding-bottom: 5%;
+        }
+
+        .space {
+            height: 95px;
+        }
+
+        .guy {
+            height: 60px;
+            width: auto;
+            margin-left: -55px;
+            margin-top: -30px;
+            filter: hue-rotate(var(--hue, 90deg));
+            transition: filter .2s linear;
+            /* optional */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top controls -->
+    <div class="topbar">
+        <button id="navToggle" class="nav-toggle" type="button" aria-controls="navPanel" aria-expanded="false"
+            data-state="open">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                <line class="bar top" x1="3" y1="12" x2="21" y2="12" stroke-width="2" stroke-linecap="round" />
+                <line class="bar mid" x1="3" y1="12" x2="21" y2="12" stroke-width="2" stroke-linecap="round" />
+                <line class="bar bot" x1="3" y1="12" x2="21" y2="12" stroke-width="2" stroke-linecap="round" />
+            </svg>
+            <span class="label">OPEN</span>
+        </button>
+        <div class="logo"><img src="assets/sokkoLogoWhite.png" alt="Sokko logo" /></div>
+    </div>
+
+    <!-- Slide-in nav (same links as index) -->
+    <aside id="navPanel" class="nav-panel" aria-hidden="true">
+        <nav aria-label="Primary">
+            <ul class="nav-list">
+                <li><a href="/">HOME</a></li>
+                <li><a href="#palette">PALETTE</a></li>
+                <!-- <li><a href="#projects">PROJECTS</a></li>
+                <li><a href="#creatives">CREATIVES</a></li>
+                <li><a href="#network">NETWORK</a></li>
+                <li><a href="#shop">SHOP</a></li>
+                <li><a href="#about">ABOUT</a></li> -->
+            </ul>
+        </nav>
+    </aside>
+
+    <main role="main" id="main">
+        <header>
+            <h1>The Sokko Palette <img class="guy" src="assets/little-guys/guy-20.png"></h1>
+            <p class="sub">Create an original recreation of Sokko’s logo. Read the objectives, then submit a proposal
+                and your final artwork.</p>
+        </header>
+
+        <!-- Tabs -->
+        <div class="tabs" role="tablist" aria-label="Palette sections">
+            <button class="tab" role="tab" id="t-obj" aria-controls="p-obj" aria-selected="true">Objectives</button>
+            <button class="tab" role="tab" id="t-prop" aria-controls="p-prop" aria-selected="false">Proposal</button>
+            <button class="tab" role="tab" id="t-sub" aria-controls="p-sub" aria-selected="false">Submission</button>
+            <div class="actions">
+                <a id="assetsBtn" class="btn"
+                    href="https://drive.google.com/drive/folders/1G7efRvNOTSBhwByugOaV8YUFRBuXGGkn?usp=sharing"
+                    target="_blank" rel="noopener">Logo Assets</a>
+                <a id="openDisclaimer" class="btn" type="button">Disclaimer</a>
+            </div>
+        </div>
+
+        <!-- Panels -->
+        <section id="p-obj" class="panel" data-active="true" role="tabpanel" aria-labelledby="t-obj">
+            <div class="stack">
+                <div class="card">
+                    <h3>Objectives & Rules</h3>
+                    <p class="sub">Create an original Sokko logo recreation. Proposal first, then final submission when
+                        ready.</p>
+                    <div class="grid">
+                        <div>
+                            <h4>General</h4>
+                            <ul>
+                                <li>The logo must remain recognizably <strong>Sokko</strong>.</li>
+                                <li>Create a Google Drive folder named <code>TheSokkoPalette_YourName</code> and add
+                                    your assets.</li>
+                                <li>Naming — Proposal: <code>Proposal_YourName_v1</code>; Final:
+                                    <code>Final_YourName_v1</code>.
+                                </li>
+                            </ul>
+                            <h4>Digital</h4>
+                            <ul>
+                                <li>Minimum: <code>3000 × 3000</code> px at <code>300 DPI</code>.</li>
+                                <li>Background: transparent or solid color.</li>
+                                <li>Export: <code>.PNG</code> (lossless) and <code>.SVG</code>/<code>.AI</code> (vector
+                                    preferred). No JPG/PDF flattening.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>Canvas / Drawing</h4>
+                            <ul class="space">
+                                <li>Solid background (white/black/neutral; no gradients/textures).</li>
+                                <li>Scan/photograph in high quality. If local, Sokko can photograph your piece.</li>
+                            </ul>
+                            <h4>Share Settings</h4>
+                            <ul>
+                                <li>Drive links must be accessible: <em>Anyone with the link → Viewer (or
+                                        Commenter)</em>.</li>
+                                <li>Prefer folder links for proposals and finals.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="legend">These rules mirror the brief used across Sokko channels.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="p-prop" class="panel" role="tabpanel" aria-labelledby="t-prop">
+            <div class="card">
+                <h3>Proposal</h3>
+                <p class="sub">Submit a concept or draft. You’ll get an email confirmation.</p>
+                <form id="formProposal" novalidate>
+                    <div class="row">
+                        <div>
+                            <label for="propArtist" class="required">Artist Name</label>
+                            <input id="propArtist" name="artist" autocomplete="name" required />
+                        </div>
+                        <div>
+                            <label for="propEmail" class="required">Email</label>
+                            <input id="propEmail" name="email" type="email" autocomplete="email" required />
+                        </div>
+                    </div>
+                    <div>
+                        <label for="propNotes">Proposed Style / Notes</label>
+                        <textarea id="propNotes" name="notes" class="long"
+                            placeholder="Describe your approach, tools, references, or needs (e.g., camera access)."></textarea>
+                    </div>
+                    <div>
+                        <label for="propDrive" class="required">Google Drive Link (Proposal)</label>
+                        <input class="long" id="propDrive" name="drive_link" type="url"
+                            placeholder="https://drive.google.com/…" required
+                            pattern="https?://(drive|docs)\.google\.com/.*" />
+                        <p class="foot-note">Share settings must allow viewing/commenting. </p>
+                    </div>
+                    <div>
+                        <button class="btn" type="submit">Send Proposal</button>
+                        <span id="propMsg" class="success" hidden>Sent — check your email.</span>
+                        <span id="propErr" class="error" hidden>Couldn’t send — please try again.</span>
+                    </div>
+                    <p class="foot-note">Template will email you a summary and forward to Sokko admins.</p>
+                </form>
+            </div>
+        </section>
+
+        <section id="p-sub" class="panel" role="tabpanel" aria-labelledby="t-sub">
+            <div class="card">
+                <h3>Submission</h3>
+                <p class="sub">Upload your final files to Drive and share the link below.</p>
+                <form id="formSubmission" novalidate>
+                    <div class="row">
+                        <div>
+                            <label for="subArtist" class="required">Artist Name</label>
+                            <input id="subArtist" name="artist" required />
+                        </div>
+                        <div>
+                            <label for="subEmail" class="required">Email</label>
+                            <input id="subEmail" name="email" type="email" required />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>
+                            <label for="subInsta">Instagram/TikTok URL (optional)</label>
+                            <input id="subInsta" name="instagram" type="url"
+                                placeholder="https://instagram.com/yourhandle" />
+                        </div>
+                        <div>
+                            <label for="subDrive" class="required">Google Drive Link (Final)</label>
+                            <input id="subDrive" name="drive_link" type="url" placeholder="https://drive.google.com/…"
+                                required pattern="https?://(drive|docs)\.google\.com/.*" />
+                        </div>
+                    </div>
+                    <div>
+                        <label for="subNotes">Notes (optional)</label>
+                        <textarea id="subNotes" name="notes" class="long"
+                            placeholder="Anything we should know before review."></textarea>
+                    </div>
+                    <div>
+                        <button class="btn" type="submit">Send Submission</button>
+                        <span id="subMsg" class="success" hidden>Sent — thank you!</span>
+                        <span id="subErr" class="error" hidden>Couldn’t send — please try again.</span>
+                    </div>
+                    <p class="foot-note">Minimums: 3000×3000 @ 300DPI; PNG + SVG/AI. No flattened JPG/PDF.</p>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="legal">
+            <h3 id="discTitle">Legal & Copyright Notice</h3>
+            <p>By submitting artwork to <strong>The Sokko Palette</strong>, you grant <strong>Sokko</strong> a
+                <em>non-exclusive, perpetual, worldwide, royalty-free license</em> to use, display, modify, reproduce,
+                and distribute your submitted work across our platforms (including social media, websites, promotional
+                materials, and merchandise), with credit given to you as the original artist.
+            </p>
+            <p>All original content created by Sokko — including but not limited to its name, logos, marks, branding
+                materials, and any derivative works — is protected intellectual property. Unauthorized reproduction,
+                distribution, or commercial use of Sokko’s trademarks, logos, or related materials is strictly
+                prohibited without prior written consent from Sokko.</p>
+            <p>© 2025 Sokko. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Disclaimer Modal (first-visit gate + re-open button) -->
+    <dialog class="modal" id="disclaimerModal">
+        <div class="modal-card" role="document">
+            <h3>Legal & Copyright Notice</h3>
+            <p>By submitting artwork to <strong>The Sokko Palette</strong>, you grant <strong>Sokko</strong> a
+                <em>non-exclusive, perpetual, worldwide, royalty-free license</em> to use, display, modify, reproduce,
+                and distribute your submitted work across our platforms (including social media, websites, promotional
+                materials, and merchandise), with credit given to you as the original artist.
+            </p>
+            <p>All original content created by Sokko — including but not limited to its name, logos, marks, branding
+                materials, and any derivative works — is protected intellectual property. Unauthorized reproduction,
+                distribution, or commercial use of Sokko’s trademarks, logos, or related materials is strictly
+                prohibited without prior written consent from Sokko.</p>
+            <p>© 2025 Sokko. All Rights Reserved.</p>
+            <div class="modal-actions">
+                <button id="declineBtn" class="btn" type="button">Decline</button>
+                <button id="acceptBtn" class="btn" type="button">Accept</button>
+            </div>
+        </div>
+    </dialog>
+
+    <script>
+        // ---------- Cohesive nav logic (copied from index.html with minimal changes) ----------
+        (function () {
+            const mql = window.matchMedia('(max-width: 900px)');
+            const body = document.body;
+            const btn = document.getElementById('navToggle');
+            const panel = document.getElementById('navPanel');
+            const label = btn.querySelector('.label');
+            let isOpen = false;
+
+            function resetItems() {
+                body.classList.remove('menu-ready', 'items-in');
+                document.querySelectorAll('.nav-list li').forEach(li => { li.style.opacity = 0; li.style.transform = 'translateY(-18px)'; li.style.animation = 'none'; li.offsetHeight; li.style.animation = ''; });
+            }
+            function openMenu() {
+                if (isOpen) return; isOpen = true; body.dataset.open = 'true'; btn.setAttribute('data-state', 'close'); if (!mql.matches) label.textContent = 'CLOSE'; btn.setAttribute('aria-expanded', 'true'); panel.classList.remove('anim-out'); panel.classList.add('anim-in'); panel.setAttribute('aria-hidden', 'false');
+                if (mql.matches) { body.classList.add('menu-ready'); setTimeout(() => body.classList.add('items-in'), 80); }
+                else { const onEnd = (e) => { if (e.target !== panel) return; panel.removeEventListener('animationend', onEnd); body.classList.add('menu-ready'); setTimeout(() => body.classList.add('items-in'), 120); }; panel.addEventListener('animationend', onEnd); }
+            }
+            function closeMenu() {
+                if (!isOpen) return; isOpen = false; body.dataset.open = 'false'; btn.setAttribute('data-state', 'open'); if (!mql.matches) label.textContent = 'OPEN'; btn.setAttribute('aria-expanded', 'false'); body.classList.remove('items-in', 'menu-ready'); panel.classList.remove('anim-in'); panel.classList.add('anim-out'); panel.setAttribute('aria-hidden', 'true'); resetItems();
+            }
+            btn.addEventListener('click', () => isOpen ? closeMenu() : openMenu());
+            resetItems();
+        })();
+
+        // ---------- Tabs ----------
+        (function () {
+            const tabs = [...document.querySelectorAll('.tab')];
+            const panels = {};
+            tabs.forEach(t => { panels[t.getAttribute('aria-controls')] = document.getElementById(t.getAttribute('aria-controls')); });
+            function setActive(id) {
+                tabs.forEach(t => t.setAttribute('aria-selected', String(t.id === 't-' + id)));
+                Object.entries(panels).forEach(([pid, el]) => { el.dataset.active = String(pid === 'p-' + id); });
+            }
+            tabs.forEach(t => t.addEventListener('click', () => setActive(t.id.replace('t-', ''))));
+        })();
+
+        // ---------- Disclaimer first-visit gate ----------
+        (function () {
+            const KEY = 'sokko_palette_disclaimer_accepted_v1';
+            const modal = document.getElementById('disclaimerModal');
+            const openBtn = document.getElementById('openDisclaimer');
+            const accept = document.getElementById('acceptBtn');
+            const decline = document.getElementById('declineBtn');
+
+            function show() { if (typeof modal.showModal === 'function') { modal.showModal(); } else { modal.setAttribute('open', ''); } }
+            function hide() { if (typeof modal.close === 'function') { modal.close(); } else { modal.removeAttribute('open'); } }
+
+            if (!localStorage.getItem(KEY)) show();
+            openBtn.addEventListener('click', show);
+            accept.addEventListener('click', () => { localStorage.setItem(KEY, '1'); hide(); });
+            decline.addEventListener('click', () => { alert('oops: You must agree to continue.'); show(); });
+        })();
+
+        // ---------- EmailJS ----------
+        (function () {
+            // TODO: replace with your actual IDs from EmailJS dashboard
+            const EMAILJS_SERVICE_ID = 'service_ozjxu7m';
+            const TEMPLATE_PROPOSAL_ID = 'template_m9rhppt';
+            const TEMPLATE_SUBMISSION_ID = 'template_7dpwl1r';
+            const PUBLIC_KEY = 'V3wzvSC6zzoUGXfQv';
+
+            if (window.emailjs) { emailjs.init(PUBLIC_KEY); }
+
+            function validate(form) {
+                if (!form.checkValidity()) { form.reportValidity(); return false; }
+                return true;
+            }
+
+            // Helper to send to user template, then forward to admins as a second message if desired
+            async function sendWithForward(templateId, data) {
+                // primary email to artist with summary
+                await emailjs.send(EMAILJS_SERVICE_ID, templateId, data);
+                // OPTIONAL: uncomment to also forward to admins using the same template or a dedicated admin template
+                // await emailjs.send(EMAILJS_SERVICE_ID, templateId, { ...data, email: 'admin@studiosokko.com,billkawaka0@gmail.com' });
+            }
+
+            // Proposal form
+            const fProp = document.getElementById('formProposal');
+            const propMsg = document.getElementById('propMsg');
+            const propErr = document.getElementById('propErr');
+            fProp.addEventListener('submit', async (e) => {
+                e.preventDefault(); propMsg.hidden = true; propErr.hidden = true;
+                if (!validate(fProp)) return;
+                const data = {
+                    artist: fProp.artist.value.trim(),
+                    email: fProp.email.value.trim(),
+                    notes: fProp.notes.value.trim(),
+                    drive_link: fProp.drive_link.value.trim()
+                };
+                try { await sendWithForward(TEMPLATE_PROPOSAL_ID, data); propMsg.hidden = false; fProp.reset(); }
+                catch (err) { console.error(err); propErr.hidden = false; }
+            });
+
+            // Submission form
+            const fSub = document.getElementById('formSubmission');
+            const subMsg = document.getElementById('subMsg');
+            const subErr = document.getElementById('subErr');
+            fSub.addEventListener('submit', async (e) => {
+                e.preventDefault(); subMsg.hidden = true; subErr.hidden = true;
+                if (!validate(fSub)) return;
+                const data = {
+                    artist: fSub.artist.value.trim(),
+                    email: fSub.email.value.trim(),
+                    instagram: fSub.instagram.value.trim(),
+                    drive_link: fSub.drive_link.value.trim(),
+                    notes: fSub.notes.value.trim()
+                };
+                try { await sendWithForward(TEMPLATE_SUBMISSION_ID, data); subMsg.hidden = false; fSub.reset(); }
+                catch (err) { console.error(err); subErr.hidden = false; }
+            });
+        })();
+
+        // ---------- Fill in external links ----------
+        (function () {
+            // Replace with your real Drive assets folder URL
+            const assetsURL = 'https://drive.google.com/drive/folders/1G7efRvNOTSBhwByugOaV8YUFRBuXGGkn?usp=sharing';
+            const assetsBtn = document.getElementById('assetsBtn');
+            assetsBtn.href = assetsURL;
+        })();
+
+        // ---------- Hue Rotation ----------
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const rand = () => Math.floor(Math.random() * 360) + 'deg';
+            document.querySelectorAll('.guy').forEach(el =>
+                el.style.setProperty('--hue', rand())
+            );
+        });
+    </script>
+</body>
+
+</html>
