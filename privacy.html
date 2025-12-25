@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- sokko.org — gone + left slide-in nav (desktop) / full-overlay (mobile) -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sokko </title>
+    <meta name="description"
+        content="Sokko is a film and animation studio. We’re currently rebuilding our site* don’t change the channel, we’ll be back." />
+    <meta name="keywords"
+        content="Sokko, film studio, animation studio, idk Studios, idkstudios.org, production, post-production" />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://sokko.org/" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Sokko — Film & Animation Studio" />
+    <meta property="og:description"
+        content="We’re currently rebuilding our site* don’t change the channel, we’ll be back." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://sokko.org/" />
+    <meta property="og:image" content="https://sokko.org/og-image.jpg" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Sokko — Film & Animation Studio" />
+    <meta name="twitter:description"
+        content="We’re currently rebuilding our site* don’t change the channel, we’ll be back." />
+    <meta name="twitter:image" content="https://sokko.org/og-image.jpg" />
+
+    <!-- Favicons (replace when ready) -->
+    <link rel="icon" href="assets/favicon/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon/favicon.svg">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
+
+    <!-- Font (optional) -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <style>
+        /* =========================================================
+   1) Tokens
+========================================================= */
+        :root {
+            /* baseline scale (~10% smaller) */
+            --gap-x: 4px;
+            --gap-top: 4px;
+            --radius: 54px;
+
+            --panelW: 378px;
+            --panelOffset: 22px;
+            --panelPadX: 29px;
+            --panelLeftBack: 22px;
+            --pausePx: 252px;
+
+            --z-ui: 20;
+            --speed: 660ms;
+            --ease: cubic-bezier(.2, .9, .1, 1);
+            --itemSpeed: 234ms;
+            --itemStagger: 108ms;
+
+            --ink: #000;
+            --paper: #fff;
+
+            --cardRadius: 44px;
+            --cardBorder: rgb(255, 255, 255);
+            --cardFill: rgb(255, 255, 255);
+
+            --footerRadius: 43px;
+        }
+
+        /* =========================================================
+   2) Base / Resets
+========================================================= */
+        html {
+            font-size: 90%;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+                "Apple Color Emoji", "Segoe UI Emoji";
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            overscroll-behavior: none;
+        }
+
+        a {
+            color: var(--ink);
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        /* =========================================================
+   3) Topbar + Hamburger
+========================================================= */
+        .topbar {
+            position: fixed;
+            top: 45px;
+            left: calc(var(--panelOffset) + var(--panelPadX));
+            right: 8px;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 11px;
+            pointer-events: auto;
+        }
+
+        .nav-toggle {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 9px 13px;
+            background: #000;
+            color: #fff;
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+            transition: background .25s, color .25s;
+        }
+
+        /* Keep your current behavior: stays black/white even when open */
+        body[data-open="true"] .nav-toggle {
+            background: #000;
+            color: #fff;
+        }
+
+        .nav-toggle .icon {
+            width: 20px;
+            height: 20px;
+            display: block;
+        }
+
+        .nav-toggle .icon .bar {
+            transition: transform .28s var(--ease), opacity .2s;
+            transform-origin: 50% 50%;
+            stroke: currentColor;
+        }
+
+        .nav-toggle:not([data-state="close"]) .bar.top {
+            transform: translateY(-5px);
+        }
+
+        .nav-toggle:not([data-state="close"]) .bar.mid {
+            opacity: 1;
+        }
+
+        .nav-toggle:not([data-state="close"]) .bar.bot {
+            transform: translateY(5px);
+        }
+
+        .nav-toggle[data-state="close"] .bar.top {
+            transform: rotate(45deg);
+        }
+
+        .nav-toggle[data-state="close"] .bar.mid {
+            opacity: 0;
+        }
+
+        .nav-toggle[data-state="close"] .bar.bot {
+            transform: rotate(-45deg);
+        }
+
+        /* =========================================================
+   4) Nav Panel (desktop slide)
+========================================================= */
+        .nav-panel {
+            position: fixed;
+            top: 0;
+            left: var(--panelOffset);
+            height: 100vh;
+            width: min(calc(100vw - calc(var(--panelOffset) * 2)), var(--panelW));
+            background: #000;
+            transform: translateX(-120%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            padding: 29px var(--panelPadX);
+        }
+
+        .nav-panel::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: calc(-1 * var(--panelLeftBack));
+            width: var(--panelLeftBack);
+            height: 100%;
+            background: #000;
+        }
+
+        @keyframes p5-swoop {
+            0% {
+                transform: translateX(-120%);
+            }
+
+            70% {
+                transform: translateX(calc(-1 * var(--pausePx)));
+            }
+
+            82% {
+                transform: translateX(calc(-1 * var(--pausePx)));
+            }
+
+            100% {
+                transform: translateX(0%);
+            }
+        }
+
+        @keyframes p5-out {
+            from {
+                transform: translateX(0%);
+            }
+
+            to {
+                transform: translateX(-120%);
+            }
+        }
+
+        .nav-panel.anim-in {
+            animation: p5-swoop var(--speed) var(--ease) forwards;
+        }
+
+        .nav-panel.anim-out {
+            animation: p5-out 420ms var(--ease) forwards;
+        }
+
+        .nav-list {
+            list-style: none;
+            margin: 126px 0 0;
+            padding: 0;
+        }
+
+        .nav-list li {
+            opacity: 0;
+            transform: translateY(-18px);
+            will-change: transform, opacity;
+        }
+
+        .nav-list a {
+            display: block;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 800;
+            letter-spacing: .02em;
+            text-transform: uppercase;
+            line-height: 1.05;
+            font-size: clamp(27px, 4.05vw, 61px);
+            padding: 0 var(--panelPadX);
+            padding-left: 0;
+        }
+
+        .nav-list li:not(:first-child) a {
+            opacity: .55;
+        }
+
+        .nav-list li:not(:first-child) a:hover {
+            opacity: 1;
+        }
+
+        .nav-list a:hover {
+            background-color: yellow;
+            color: #000;
+        }
+
+        @keyframes dropIn {
+            from {
+                opacity: 0;
+                transform: translateY(-18px) skewY(-3deg);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) skewY(0deg);
+            }
+        }
+
+        body.menu-ready .nav-list li:first-child {
+            animation: dropIn var(--itemSpeed) var(--ease) forwards;
+        }
+
+        body.items-in .nav-list li:nth-child(2) {
+            animation: dropIn var(--itemSpeed) var(--ease) forwards;
+            animation-delay: calc(var(--itemStagger) * 1);
+        }
+
+        body.items-in .nav-list li:nth-child(3) {
+            animation: dropIn var(--itemSpeed) var(--ease) forwards;
+            animation-delay: calc(var(--itemStagger) * 2);
+        }
+
+        body.items-in .nav-list li:nth-child(4) {
+            animation: dropIn var(--itemSpeed) var(--ease) forwards;
+            animation-delay: calc(var(--itemStagger) * 3);
+        }
+
+        body.items-in .nav-list li:nth-child(5) {
+            animation: dropIn var(--itemSpeed) var(--ease) forwards;
+            animation-delay: calc(var(--itemStagger) * 4);
+        }
+
+        body.items-in .nav-list li:nth-child(6) {
+            animation: dropIn var(--itemSpeed) var(--ease) forwards;
+            animation-delay: calc(var(--itemStagger) * 5);
+        }
+
+        /* =========================================================
+   5) Page Layout + Typography
+========================================================= */
+        .page {
+            min-height: 100vh;
+            padding: 120px 22px 110px;
+            /* room for fixed footer */
+            display: grid;
+            place-items: start center;
+        }
+
+        .paper {
+            width: 90%;
+            border-radius: var(--cardRadius);
+            border: 1px solid var(--cardBorder);
+            background: var(--cardFill);
+            padding: 28px 26px;
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            font-family: Arial, system-ui, sans-serif;
+            font-size: clamp(18px, 2.4vw, 36px);
+            letter-spacing: .02em;
+            text-transform: uppercase;
+        }
+
+        .meta {
+            margin: 0 0 18px;
+            font-family: Arial, system-ui, sans-serif;
+            opacity: .7;
+            font-size: 12px;
+        }
+
+        h2 {
+            margin: 22px 0 8px;
+            font-family: Arial, system-ui, sans-serif;
+            font-size: 16px;
+            letter-spacing: .02em;
+            text-transform: uppercase;
+        }
+
+        p,
+        li {
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        ul {
+            padding-left: 18px;
+        }
+
+        code {
+            font-family: Arial, system-ui, sans-serif;
+            background: rgba(0, 0, 0, .06);
+            padding: 1px 6px;
+            border-radius: 999px;
+        }
+
+        /* =========================================================
+   6) Footer (Privacy version)
+========================================================= */
+        .site-footer {
+            position: fixed;
+            bottom: 11px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 30;
+            width: calc(100% - 43px);
+            pointer-events: auto;
+        }
+
+        .footer-inner {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(1px);
+            border-radius: var(--footerRadius);
+            padding: 13px 18px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 14px;
+        }
+
+        /* Legal */
+        .footer-legal {
+            display: flex;
+            justify-content: flex-end;
+            gap: 7px;
+            font-size: 10px;
+            opacity: 0.75;
+        }
+
+        .footer-legal a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .footer-legal a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-legal .dot {
+            opacity: 0.4;
+        }
+
+        /* =========================================================
+   7) Privacy Footer Layout Tweaks
+========================================================= */
+        /* Desktop: bottom-right, compact */
+        @media (min-width: 701px) {
+            .privacy-footer {
+                left: auto;
+                right: 22px;
+                transform: none;
+                width: auto;
+            }
+
+            .privacy-footer .footer-inner {
+                grid-template-columns: auto;
+                padding: 10px 14px;
+            }
+
+            .privacy-footer .footer-legal {
+                justify-content: flex-end;
+                white-space: nowrap;
+            }
+        }
+
+        /* Mobile: centered pill */
+        @media (max-width: 700px) {
+            .site-footer {
+                width: 65%;
+            }
+
+            .footer-inner {
+                grid-template-columns: 1fr;
+                padding: 9px 13px;
+                border-radius: 25px;
+                text-align: center;
+            }
+
+            .footer-legal {
+                justify-content: center;
+                font-size: 9px;
+                opacity: 0.85;
+            }
+        }
+
+        /* =========================================================
+   8) Responsive: Mobile nav overlay
+========================================================= */
+        @media (max-width: 900px) {
+            .topbar {
+                top: 7px;
+                left: 25px;
+                right: 11px;
+                z-index: 2001;
+            }
+
+            .nav-toggle .label {
+                display: none;
+            }
+
+            .nav-toggle {
+                margin-top: 14px;
+                background-color: transparent;
+                color: #000;
+            }
+
+            .nav-panel {
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                padding: 22px 25px;
+                transform: none;
+                opacity: 0;
+                pointer-events: none;
+                z-index: 2000;
+            }
+
+            .nav-panel.anim-in,
+            .nav-panel.anim-out {
+                animation: none !important;
+            }
+
+            body[data-open="true"] .nav-panel {
+                opacity: 1;
+                pointer-events: auto;
+                transition: opacity 220ms ease;
+            }
+
+            .nav-list {
+                margin-top: 90px;
+                padding: 0;
+            }
+
+            .nav-list a {
+                font-size: clamp(40px, 10.8vw, 101px);
+                padding: 0 25px;
+                padding-left: 0;
+            }
+
+            .page {
+                padding: 75px 22px 50px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Topbar -->
+    <div class="topbar">
+        <button id="navToggle" class="nav-toggle" type="button" aria-controls="navPanel" aria-expanded="false"
+            data-state="open">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                <line class="bar top" x1="3" y1="12" x2="21" y2="12" stroke-width="2" stroke-linecap="round" />
+                <line class="bar mid" x1="3" y1="12" x2="21" y2="12" stroke-width="2" stroke-linecap="round" />
+                <line class="bar bot" x1="3" y1="12" x2="21" y2="12" stroke-width="2" stroke-linecap="round" />
+            </svg>
+            <span class="label">OPEN</span>
+        </button>
+    </div>
+
+    <!-- Nav panel -->
+    <aside id="navPanel" class="nav-panel" aria-hidden="true">
+        <nav aria-label="Primary">
+            <ul class="nav-list">
+                <li><a href="/">HOME</a></li>
+                <!-- add more later -->
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main -->
+    <div class="page">
+        <main class="paper" role="main">
+            <h1>Privacy Policy</h1>
+            <p class="meta">Effective date: December 25, 2025</p>
+
+            <p>
+                Sokko (“<strong>Sokko</strong>,” “<strong>we</strong>,” “<strong>us</strong>”) operates this website and
+                related
+                pages (the “<strong>Site</strong>”). This Privacy Policy explains what information we collect, how we
+                use it, and
+                the choices you have.
+            </p>
+
+            <h2>What we collect</h2>
+            <ul>
+                <li><strong>Email address (optional):</strong> If you enter your email, we collect it to send periodic
+                    newsletters and announcements.</li>
+                <li><strong>Analytics data:</strong> We use Google Analytics to understand how visitors use the Site.
+                    This may involve cookies and similar technologies.</li>
+            </ul>
+
+            <h2>What we do not collect</h2>
+            <ul>
+                <li>We do not ask for or collect your name, age, address, payment information, or government ID through
+                    the Site.</li>
+                <li>We do not knowingly collect personal information from children under 13.</li>
+            </ul>
+
+            <h2>How we use information</h2>
+            <ul>
+                <li>To send newsletters and announcements when you subscribe.</li>
+                <li>To operate, maintain, and improve the Site (including understanding traffic and performance via
+                    analytics).</li>
+                <li>To protect the security and integrity of the Site.</li>
+            </ul>
+
+            <h2>Email communications</h2>
+            <p>
+                If you subscribe, your email may be processed by our third-party email service provider (e.g.,
+                Mailchimp).
+                You can unsubscribe at any time using the link in our emails. You can also opt out by emailing
+                <a href="mailto:support@sokko.org">support@sokko.org</a>.
+            </p>
+
+            <h2>Cookies and analytics</h2>
+            <p>
+                We use Google Analytics to measure Site usage (for example, visits and interactions). Google Analytics
+                may set
+                cookies or similar identifiers. You can control cookies through your browser settings and, where
+                available,
+                Google’s opt-out options.
+            </p>
+
+            <h2>Third-party links and embeds</h2>
+            <p>
+                The Site may include links to or embeds from third-party platforms (such as YouTube, Discord, Instagram,
+                LinkedIn,
+                Facebook, and X). When you interact with those services, they may collect information under their own
+                policies.
+                We are not responsible for third-party privacy practices.
+            </p>
+
+            <h2>Sharing and selling</h2>
+            <p>
+                We do not sell your personal information. We may share limited information with service providers that
+                help us run
+                the Site (for example, email delivery and analytics), only as needed to provide those services.
+            </p>
+
+            <h2>Data storage and security</h2>
+            <p>
+                Email subscription data and analytics are stored and processed by third-party providers. We take
+                reasonable
+                measures designed to protect information, but no method of transmission or storage is 100% secure.
+            </p>
+
+            <h2>International visitors</h2>
+            <p>
+                Our operations and service providers may process information in the United States. If you access the
+                Site from
+                outside the United States, you understand your information may be transferred to and processed in the
+                U.S.
+            </p>
+
+            <h2>Changes to this policy</h2>
+            <p>
+                We may update this Privacy Policy as Sokko evolves. We will update the “Effective date” above when
+                changes are
+                made.
+            </p>
+
+            <h2>Contact</h2>
+            <p>
+                For privacy questions or requests, contact:
+                <br />
+                <a href="mailto:biz@sokko.org">biz@sokko.org</a>
+                <br />
+                Opt-out support:
+                <a href="mailto:support@sokko.org">support@sokko.org</a>
+            </p>
+        </main>
+    </div>
+
+    <!-- Footer (same structure as index, inverted colors) -->
+    <footer class="site-footer privacy-footer">
+        <div class="footer-inner">
+            <div class="footer-legal">
+                <span>© 2025 Sokko</span>
+                <span class="dot">•</span>
+                <a href="/privacy.html">Privacy</a>
+                <span class="dot">•</span>
+                <a href="/tos.html">Terms</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function () {
+            const mql = window.matchMedia('(max-width: 900px)');
+
+            const body = document.body;
+            const btn = document.getElementById('navToggle');
+            const panel = document.getElementById('navPanel');
+            const label = btn.querySelector('.label');
+
+            let isOpen = false;
+
+            function resetItems() {
+                body.classList.remove('menu-ready', 'items-in');
+                document.querySelectorAll('.nav-list li').forEach(li => {
+                    li.style.opacity = 0;
+                    li.style.transform = 'translateY(-18px)';
+                    li.style.animation = 'none';
+                    li.offsetHeight;
+                    li.style.animation = '';
+                });
+            }
+
+            function openMenu() {
+                if (isOpen) return;
+                isOpen = true;
+                body.dataset.open = 'true';
+                btn.setAttribute('data-state', 'close');
+                if (!mql.matches) label.textContent = 'CLOSE';
+                btn.setAttribute('aria-expanded', 'true');
+                panel.classList.remove('anim-out');
+                panel.classList.add('anim-in');
+                panel.setAttribute('aria-hidden', 'false');
+
+                if (mql.matches) {
+                    body.classList.add('menu-ready');
+                    setTimeout(() => body.classList.add('items-in'), 80);
+                } else {
+                    const onEnd = (e) => {
+                        if (e.target !== panel) return;
+                        panel.removeEventListener('animationend', onEnd);
+                        body.classList.add('menu-ready');
+                        setTimeout(() => body.classList.add('items-in'), 120);
+                    };
+                    panel.addEventListener('animationend', onEnd);
+                }
+            }
+
+            function closeMenu() {
+                if (!isOpen) return;
+                isOpen = false;
+                body.dataset.open = 'false';
+                btn.setAttribute('data-state', 'open');
+                if (!mql.matches) label.textContent = 'OPEN';
+                btn.setAttribute('aria-expanded', 'false');
+                body.classList.remove('items-in', 'menu-ready');
+                panel.classList.remove('anim-in');
+                panel.classList.add('anim-out');
+                panel.setAttribute('aria-hidden', 'true');
+                resetItems();
+            }
+
+            btn.addEventListener('click', () => isOpen ? closeMenu() : openMenu());
+            resetItems();
+        })();
+    </script>
+</body>
+
+</html>
